@@ -325,9 +325,6 @@ void audit_core_dumps(long signr);
 static inline void audit_seccomp_errno(unsigned long syscall, int errno,
 				       int code)
 {
-	if (!audit_enabled)
-		return;
-
 	if (errno || unlikely(!audit_dummy_context())) {
 		struct audit_seccomp_info info = { .code = code,
 						   .errno = errno };
@@ -339,9 +336,6 @@ static inline void audit_seccomp_errno(unsigned long syscall, int errno,
 static inline void audit_seccomp_signal(unsigned long syscall, long signr,
 					int code)
 {
-	if (!audit_enabled)
-		return;
-
 	/* Force a record to be reported if a signal was delivered. */
 	if (signr || unlikely(!audit_dummy_context())) {
 		struct audit_seccomp_info info = { .code = code,
@@ -353,9 +347,6 @@ static inline void audit_seccomp_signal(unsigned long syscall, long signr,
 
 static inline void audit_seccomp_common(unsigned long syscall, int code)
 {
-	if (!audit_enabled)
-		return;
-
 	if (code || unlikely(!audit_dummy_context())) {
 		struct audit_seccomp_info info = { .code = code };
 
